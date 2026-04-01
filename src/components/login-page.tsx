@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 import {doc, setDoc } from "firebase/firestore"
 import {auth, db} from "@/lib/firebase.ts";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "@firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "@firebase/auth";
 
 export function EmailLoginPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -24,9 +24,16 @@ export function EmailLoginPage() {
                 await signInWithEmailAndPassword(auth, email, password);
             } else {
                 const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+                const generatedName = email.split('@')[0];
+
+                await updateProfile(userCred.user, {
+                    displayName: generatedName
+                });
+
                 await setDoc(doc(db, "users", userCred.user.uid), {
                     email: userCred.user.email,
-                    displayName: email.split('@')[0],
+                    displayName: generatedName,
                 })
             }
             navigate("/chat");
