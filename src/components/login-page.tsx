@@ -1,38 +1,37 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
-import {auth, googleAuthProvider} from "@/lib/firebase.ts";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup} from "@firebase/auth";
+import {doc, setDoc } from "firebase/firestore"
+import {auth, db} from "@/lib/firebase.ts";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "@firebase/auth";
 
 export function EmailLoginPage() {
-    const [isLogin, setIsLogin] = useState(true) // Toggle between Login and Register
-    const [email, setEmail] = useState("") // Changed from username to email
-    const [password, setPassword] = useState("")
-    const [errorMessage, setErrorMessage] = useState("")
+    const [isLogin, setIsLogin] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
-        e.preventDefault()
-        setErrorMessage("")
-
+        e.preventDefault();
+        setErrorMessage("");
         if (!email || !password) return;
-
         try {
             if (isLogin) {
-                // Attempt to sign in an existing user
-                await signInWithEmailAndPassword(auth, email, password)
+                await signInWithEmailAndPassword(auth, email, password);
             } else {
-                // Attempt to create a brand new user
-                await createUserWithEmailAndPassword(auth, email, password)
+                const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                await setDoc(doc(db, "users", userCred.user.uid), {
+                    email: userCred.user.email,
+                    displayName: email.split('@')[0],
+                })
             }
-            // If either succeeds, Firebase updates the state, App.tsx notices, and routes us!
-            navigate("/chat")
+            navigate("/chat");
         } catch (error: any) {
             console.error("Auth error:", error)
-            // Display the Firebase error to the user
             setErrorMessage(error.message)
         }
     }
