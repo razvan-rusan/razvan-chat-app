@@ -3,8 +3,6 @@
   "specifiers": {
     "npm:@fontsource-variable/geist@^5.2.8": "5.2.8",
     "npm:@fontsource-variable/space-grotesk@^5.2.10": "5.2.10",
-    "npm:@mantine/core@9": "9.0.0_@mantine+hooks@9.0.0__react@19.2.4_react@19.2.4_react-dom@19.2.4__react@19.2.4_@types+react@19.2.14",
-    "npm:@mantine/hooks@9": "9.0.0_react@19.2.4",
     "npm:@tailwindcss/vite@^4.2.2": "4.2.2_vite@7.3.1",
     "npm:@tauri-apps/api@2": "2.10.1",
     "npm:@tauri-apps/cli@2": "2.10.1",
@@ -15,11 +13,9 @@
     "npm:class-variance-authority@~0.7.1": "0.7.1",
     "npm:clsx@^2.1.1": "2.1.1",
     "npm:lucide-react@^1.7.0": "1.7.0_react@19.2.4",
-    "npm:postcss-preset-mantine@^1.18.0": "1.18.0_postcss@8.5.8",
-    "npm:postcss-simple-vars@^7.0.1": "7.0.1_postcss@8.5.8",
-    "npm:postcss@^8.5.8": "8.5.8",
     "npm:radix-ui@^1.4.3": "1.4.3_@types+react@19.2.14_@types+react-dom@19.2.3__@types+react@19.2.14_react@19.2.4_react-dom@19.2.4__react@19.2.4",
     "npm:react-dom@^19.1.0": "19.2.4_react@19.2.4",
+    "npm:react-router-dom@^7.13.2": "7.13.2_react@19.2.4_react-dom@19.2.4__react@19.2.4",
     "npm:react@^19.1.0": "19.2.4",
     "npm:shadcn@^4.1.1": "4.1.1_typescript@5.8.3",
     "npm:shadcn@latest": "4.1.1_typescript@5.8.3",
@@ -431,16 +427,6 @@
         "react-dom"
       ]
     },
-    "@floating-ui/react@0.27.19_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
-      "integrity": "sha512-31B8h5mm8YxotlE7/AU/PhNAl8eWxAmjL/v2QOxroDNkTFLk3Uu82u63N3b6TXa4EGJeeZLVcd/9AlNlVqzeog==",
-      "dependencies": [
-        "@floating-ui/react-dom",
-        "@floating-ui/utils",
-        "react",
-        "react-dom",
-        "tabbable"
-      ]
-    },
     "@floating-ui/utils@0.2.11": {
       "integrity": "sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg=="
     },
@@ -510,25 +496,6 @@
       "dependencies": [
         "@jridgewell/resolve-uri",
         "@jridgewell/sourcemap-codec"
-      ]
-    },
-    "@mantine/core@9.0.0_@mantine+hooks@9.0.0__react@19.2.4_react@19.2.4_react-dom@19.2.4__react@19.2.4_@types+react@19.2.14": {
-      "integrity": "sha512-GUUXlf+4uDpRu5iZ1PFy1NmgG7ttI+1I6VTw3v/b7N1jwOUhARwL1moGjPMjo3Eie3tHdVOCiVMYAvhlQ1GI5Q==",
-      "dependencies": [
-        "@floating-ui/react",
-        "@mantine/hooks",
-        "clsx",
-        "react",
-        "react-dom",
-        "react-number-format",
-        "react-remove-scroll",
-        "type-fest"
-      ]
-    },
-    "@mantine/hooks@9.0.0_react@19.2.4": {
-      "integrity": "sha512-TKcz+k0JH/jtblBfwOw/vXBX2EpJO66psJ5ZVmdDhwc6vbHDsvY6oYN8ynt9TfRn/eHZXsEmLPNj+wuGtWy4BA==",
-      "dependencies": [
-        "react"
       ]
     },
     "@modelcontextprotocol/sdk@1.29.0_zod@3.25.76": {
@@ -2133,9 +2100,6 @@
     "callsites@3.1.0": {
       "integrity": "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="
     },
-    "camelcase-css@2.0.1": {
-      "integrity": "sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA=="
-    },
     "caniuse-lite@1.0.30001780": {
       "integrity": "sha512-llngX0E7nQci5BPJDqoZSbuZ5Bcs9F5db7EtgfwBerX9XGtkkiO4NwfDDIRzHTTwcYC8vC7bmeUEPGrKlR/TkQ=="
     },
@@ -3138,49 +3102,11 @@
     "pkce-challenge@5.0.1": {
       "integrity": "sha512-wQ0b/W4Fr01qtpHlqSqspcj3EhBvimsdh0KlHhH8HRZnMsEa0ea2fTULOXOS9ccQr3om+GcGRk4e+isrZWV8qQ=="
     },
-    "postcss-js@4.1.0_postcss@8.5.8": {
-      "integrity": "sha512-oIAOTqgIo7q2EOwbhb8UalYePMvYoIeRY2YKntdpFQXNosSu3vLrniGgmH9OKs/qAkfoj5oB3le/7mINW1LCfw==",
-      "dependencies": [
-        "camelcase-css",
-        "postcss"
-      ]
-    },
-    "postcss-mixins@12.1.2_postcss@8.5.8": {
-      "integrity": "sha512-90pSxmZVfbX9e5xCv7tI5RV1mnjdf16y89CJKbf/hD7GyOz1FCxcYMl8ZYA8Hc56dbApTKKmU9HfvgfWdCxlwg==",
-      "dependencies": [
-        "postcss",
-        "postcss-js",
-        "postcss-simple-vars",
-        "sugarss",
-        "tinyglobby"
-      ]
-    },
-    "postcss-nested@7.0.2_postcss@8.5.8": {
-      "integrity": "sha512-5osppouFc0VR9/VYzYxO03VaDa3e8F23Kfd6/9qcZTUI8P58GIYlArOET2Wq0ywSl2o2PjELhYOFI4W7l5QHKw==",
-      "dependencies": [
-        "postcss",
-        "postcss-selector-parser"
-      ]
-    },
-    "postcss-preset-mantine@1.18.0_postcss@8.5.8": {
-      "integrity": "sha512-sP6/s1oC7cOtBdl4mw/IRKmKvYTuzpRrH/vT6v9enMU/EQEQ31eQnHcWtFghOXLH87AAthjL/Q75rLmin1oZoA==",
-      "dependencies": [
-        "postcss",
-        "postcss-mixins",
-        "postcss-nested"
-      ]
-    },
     "postcss-selector-parser@7.1.1": {
       "integrity": "sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg==",
       "dependencies": [
         "cssesc",
         "util-deprecate"
-      ]
-    },
-    "postcss-simple-vars@7.0.1_postcss@8.5.8": {
-      "integrity": "sha512-5GLLXaS8qmzHMOjVxqkk1TZPf1jMqesiI7qLhnlyERalG0sMbHIbJqrcnrpmZdKCLglHnRHoEBB61RtGTsj++A==",
-      "dependencies": [
-        "postcss"
       ]
     },
     "postcss@8.5.8": {
@@ -3310,13 +3236,6 @@
         "scheduler"
       ]
     },
-    "react-number-format@5.4.5_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
-      "integrity": "sha512-y8O2yHHj3w0aE9XO8d2BCcUOOdQTRSVq+WIuMlLVucAm5XNjJAy+BoOJiuQMldVYVOKTMyvVNfnbl2Oqp+YxGw==",
-      "dependencies": [
-        "react",
-        "react-dom"
-      ]
-    },
     "react-refresh@0.17.0": {
       "integrity": "sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ=="
     },
@@ -3345,6 +3264,26 @@
       ],
       "optionalPeers": [
         "@types/react"
+      ]
+    },
+    "react-router-dom@7.13.2_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-aR7SUORwTqAW0JDeiWF07e9SBE9qGpByR9I8kJT5h/FrBKxPMS6TiC7rmVO+gC0q52Bx7JnjWe8Z1sR9faN4YA==",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "react-router"
+      ]
+    },
+    "react-router@7.13.2_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-tX1Aee+ArlKQP+NIUd7SE6Li+CiGKwQtbS+FfRxPX6Pe4vHOo6nr9d++u5cwg+Z8K/x8tP+7qLmujDtfrAoUJA==",
+      "dependencies": [
+        "cookie@1.1.1",
+        "react",
+        "react-dom",
+        "set-cookie-parser"
+      ],
+      "optionalPeers": [
+        "react-dom"
       ]
     },
     "react-style-singleton@2.2.3_@types+react@19.2.14_react@19.2.4": {
@@ -3482,6 +3421,9 @@
         "parseurl",
         "send"
       ]
+    },
+    "set-cookie-parser@2.7.2": {
+      "integrity": "sha512-oeM1lpU/UvhTxw+g3cIfxXHyJRc/uidd3yK1P242gzHds0udQBYzs3y8j4gCCW+ZJ7ad0yctld8RYO+bdurlvw=="
     },
     "setprototypeof@1.2.0": {
       "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw=="
@@ -3639,15 +3581,6 @@
     },
     "strip-final-newline@4.0.0": {
       "integrity": "sha512-aulFJcD6YK8V1G7iRB5tigAP4TsHBZZrOV8pjV++zdUwmeV8uzbY7yn6h9MswN62adStNZFuCIx4haBnRuMDaw=="
-    },
-    "sugarss@5.0.1_postcss@8.5.8": {
-      "integrity": "sha512-ctS5RYCBVvPoZAnzIaX5QSShK8ZiZxD5HUqSxlusvEMC+QZQIPCPOIJg6aceFX+K2rf4+SH89eu++h1Zmsr2nw==",
-      "dependencies": [
-        "postcss"
-      ]
-    },
-    "tabbable@6.4.0": {
-      "integrity": "sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg=="
     },
     "tagged-tag@1.0.0": {
       "integrity": "sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng=="
@@ -3894,8 +3827,6 @@
       "dependencies": [
         "npm:@fontsource-variable/geist@^5.2.8",
         "npm:@fontsource-variable/space-grotesk@^5.2.10",
-        "npm:@mantine/core@9",
-        "npm:@mantine/hooks@9",
         "npm:@tailwindcss/vite@^4.2.2",
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@2",
@@ -3906,11 +3837,9 @@
         "npm:class-variance-authority@~0.7.1",
         "npm:clsx@^2.1.1",
         "npm:lucide-react@^1.7.0",
-        "npm:postcss-preset-mantine@^1.18.0",
-        "npm:postcss-simple-vars@^7.0.1",
-        "npm:postcss@^8.5.8",
         "npm:radix-ui@^1.4.3",
         "npm:react-dom@^19.1.0",
+        "npm:react-router-dom@^7.13.2",
         "npm:react@^19.1.0",
         "npm:shadcn@^4.1.1",
         "npm:tailwind-merge@^3.5.0",

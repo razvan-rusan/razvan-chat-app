@@ -1,25 +1,33 @@
-import {convertFileSrc} from "@tauri-apps/api/core";
-
-import {resourceDir, join, resolveResource} from "@tauri-apps/api/path";
-import {useEffect, useState} from "react";
 import "./App.css";
+import {
+    SidebarProvider
+} from "@/components/ui/sidebar.tsx";
+import {AppSidebar} from "@/components/app-sidebar.tsx";
+import {ChatArea} from "@/components/chat-area.tsx";
+import {LoginPage} from "@/components/login-page.tsx";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-function Demo() {
-    const [active, setActive] = useState(1);
-    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
-
+function ChatLayout() {
     return (
-        <>
-
-        </>
+        <SidebarProvider>
+            <AppSidebar/>
+            <main className="flex-1 h-screen overflow-hidden flex flex-col">
+                <ChatArea />
+            </main>
+        </SidebarProvider>
     );
 }
+
 
 export default function App() {
 
   return (
-
-          <Demo />
+      <Router>
+          <Routes>
+              <Route path="/login" element={<LoginPage/>}/>
+              <Route path="/chat" element={<ChatLayout/>}/>
+              <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+      </Router>
   );
 }
