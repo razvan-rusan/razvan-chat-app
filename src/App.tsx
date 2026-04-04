@@ -1,7 +1,4 @@
 import "./App.css";
-import {SidebarProvider} from "@/components/ui/sidebar.tsx";
-import {AppSidebar} from "@/components/app-sidebar.tsx";
-import {ChatArea} from "@/components/chat-area.tsx";
 import {EmailLoginPage} from "@/components/login-page.tsx";
 import {
     BrowserRouter as Router,
@@ -12,7 +9,7 @@ import {
 import {onAuthStateChanged, User} from "@firebase/auth";
 import React, {useEffect, useState} from "react";
 import {auth} from "@/lib/firebase.ts";
-
+import ChatLayout from "@/components/chat-layout.tsx";
 export type ChatEntity = {
     id: string;
     name?: string;
@@ -29,28 +26,10 @@ function ProtectedRoute(
     return <>{children}</>;
 }
 
-function ChatLayout({user}: { user: User }) {
-    const [activeChat, setActiveChat] = useState<ChatEntity | null>(null);
-
-    return (
-        <SidebarProvider>
-            <AppSidebar user={user} onSelectChat={setActiveChat} activeChatId={activeChat?.id}/>
-            <main className="flex-1 h-screen overflow-hidden flex flex-col">
-                {activeChat ? (
-                    <ChatArea currentUser={user} chat={activeChat} />
-                ) : (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
-                        Select a chat to start messaging
-                    </div>
-                )}
-            </main>
-        </SidebarProvider>
-    );
-}
-
 export default function App() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const unsubsrcibe = onAuthStateChanged(auth, (currentUser) => {

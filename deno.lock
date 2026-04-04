@@ -21,6 +21,7 @@
     "npm:react-dom@^19.1.0": "19.2.4_react@19.2.4",
     "npm:react-router-dom@^7.13.2": "7.13.2_react@19.2.4_react-dom@19.2.4__react@19.2.4",
     "npm:react@^19.1.0": "19.2.4",
+    "npm:shadcn-ui@latest": "0.9.5",
     "npm:shadcn@^4.1.1": "4.1.1_typescript@5.8.3",
     "npm:shadcn@latest": "4.1.1_typescript@5.8.3",
     "npm:tailwind-merge@^3.5.0": "3.5.0",
@@ -3943,6 +3944,13 @@
     },
     "setprototypeof@1.2.0": {
       "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw=="
+    },
+    "shadcn-ui@0.9.5": {
+      "integrity": "sha512-dsBQWpdLLYCdSdmvOmu53nJhhWnQD1OiblhuhkI4rPYxPKTyfbmZ2NTJHWMu1fXN9PTfN6IVK5vvh+BrjHJx2g==",
+      "dependencies": [
+        "chalk"
+      ],
+      "bin": true
     },
     "shadcn@4.1.1_typescript@5.8.3": {
       "integrity": "sha512-nBj+7LYC9kzV9v9QmRPpoOhfW4KctJVQejywdAt/K+K+z4RYlJOcO2a4AaF7elrRWkfCbgXeGK02liV0KB9HvQ==",
