@@ -51,8 +51,8 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
     if (!chat.id) return;
 
     const q = query(
-        collection(db, "chats", chat.id, "messages"),
-        orderBy("createdAt", "asc"),
+      collection(db, "chats", chat.id, "messages"),
+      orderBy("createdAt", "asc"),
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -81,7 +81,7 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
         text: textToSend,
         senderId: currentUser.uid,
         senderName: currentUser.displayName ||
-            currentUser.email?.split("@")[0] || "Unknown",
+          currentUser.email?.split("@")[0] || "Unknown",
         createdAt: serverTimestamp(),
       });
 
@@ -96,95 +96,95 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
   };
 
   return (
-      <div className="flex flex-col h-full w-full">
-        {/* HEADER */}
-        <header className="flex items-center h-16 px-4 border-b shrink-0 bg-background">
-          <SidebarTrigger className="mr-4" />
-          <h2 className="text-lg font-semibold tracking-tight">
-            {chat.name || "Direct Message"}
-          </h2>
-        </header>
+    <div className="flex flex-col h-full w-full">
+      {/* HEADER */}
+      <header className="flex items-center h-16 px-4 border-b shrink-0 bg-background">
+        <SidebarTrigger className="mr-4" />
+        <h2 className="text-lg font-semibold tracking-tight">
+          {chat.name || "Direct Message"}
+        </h2>
+      </header>
 
-        {/* MESSAGE FEED */}
-        <ScrollArea className="flex-1 min-h-0 p-4 bg-muted/30">
-          <div className="flex flex-col gap-4">
-            {messages.length === 0
-                ? (
-                    <div className="text-center text-muted-foreground my-10 text-sm">
-                      No messages yet. Say hello!
-                    </div>
-                )
-                : (
-                    messages.map((msg, index) => {
-                      const isMe = msg.senderId === currentUser.uid;
+      {/* MESSAGE FEED */}
+      <ScrollArea className="flex-1 min-h-0 p-4 bg-muted/30">
+        <div className="flex flex-col gap-4">
+          {messages.length === 0
+            ? (
+              <div className="text-center text-muted-foreground my-10 text-sm">
+                No messages yet. Say hello!
+              </div>
+            )
+            : (
+              messages.map((msg, index) => {
+                const isMe = msg.senderId === currentUser.uid;
 
-                      const isFirstInGroup = index === 0 ||
-                          messages[index - 1].senderId !== msg.senderId;
+                const isFirstInGroup = index === 0 ||
+                  messages[index - 1].senderId !== msg.senderId;
 
-                      return (
-                          <div
-                              key={msg.id}
-                              className={`flex w-full ${
-                                  isMe ? "justify-end" : "justify-start"
-                              } ${isFirstInGroup ? "mt-4" : "mt-1"}`}
-                          >
-                            {!isMe && (
-                                <div className="w-8 mr-2 flex items-start shrink-0">
-                                  {isFirstInGroup && (
-                                      <Avatar className="w-8 h-8 mt-0.5 shadow-sm">
-                                        <AvatarFallback className="text-xs bg-primary text-primary-foreground font-medium">
-                                          {msg.senderName
-                                              ? msg.senderName.charAt(0).toUpperCase()
-                                              : "?"}
-                                        </AvatarFallback>
-                                      </Avatar>
-                                  )}
-                                </div>
-                            )}
+                return (
+                  <div
+                    key={msg.id}
+                    className={`flex w-full ${
+                      isMe ? "justify-end" : "justify-start"
+                    } ${isFirstInGroup ? "mt-4" : "mt-1"}`}
+                  >
+                    {!isMe && (
+                      <div className="w-8 mr-2 flex items-start shrink-0">
+                        {isFirstInGroup && (
+                          <Avatar className="w-8 h-8 mt-0.5 shadow-sm">
+                            <AvatarFallback className="text-xs bg-primary text-primary-foreground font-medium">
+                              {msg.senderName
+                                ? msg.senderName.charAt(0).toUpperCase()
+                                : "?"}
+                            </AvatarFallback>
+                          </Avatar>
+                        )}
+                      </div>
+                    )}
 
-                            <div
-                                className={`max-w-[70%] px-4 py-2 text-sm shadow-sm flex flex-col ${
-                                    isMe
-                                        ? "bg-primary text-primary-foreground rounded-2xl rounded-tr-sm"
-                                        : "bg-background text-foreground rounded-2xl rounded-tl-sm border"
-                                }`}
-                            >
-                              {!isMe && isFirstInGroup && chat.type === "group" && (
-                                  <span className="text-xs font-semibold text-primary mb-1">
+                    <div
+                      className={`max-w-[70%] px-4 py-2 text-sm shadow-sm flex flex-col ${
+                        isMe
+                          ? "bg-primary text-primary-foreground rounded-2xl rounded-tr-sm"
+                          : "bg-background text-foreground rounded-2xl rounded-tl-sm border"
+                      }`}
+                    >
+                      {!isMe && isFirstInGroup && chat.type === "group" && (
+                        <span className="text-xs font-semibold text-primary mb-1">
                           {msg.senderName || "Unknown"}
                         </span>
-                              )}
-                              <span>{msg.text}</span>
-                            </div>
-                          </div>
-                      );
-                    })
-                )}
-            <div ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
-
-        {/* COMPOSER */}
-        <div className="p-4 border-t mt-auto shrink-0 bg-background">
-          <form onSubmit={handleSend} className="flex items-center gap-2">
-            <Input
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
-                className="flex-1 rounded-full"
-                autoFocus
-            />
-            <Button
-                type="submit"
-                size="icon"
-                className="shrink-0 rounded-full bg-primary hover:bg-primary/90 shadow-sm text-primary-foreground"
-                disabled={!newMessage.trim()}
-            >
-              <Send className="h-4 w-4" />
-              <span className="sr-only">Send message</span>
-            </Button>
-          </form>
+                      )}
+                      <span>{msg.text}</span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          <div ref={messagesEndRef} />
         </div>
+      </ScrollArea>
+
+      {/* COMPOSER */}
+      <div className="p-4 border-t mt-auto shrink-0 bg-background">
+        <form onSubmit={handleSend} className="flex items-center gap-2">
+          <Input
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type a message..."
+            className="flex-1 rounded-full"
+            autoFocus
+          />
+          <Button
+            type="submit"
+            size="icon"
+            className="shrink-0 rounded-full bg-primary hover:bg-primary/90 shadow-sm text-primary-foreground"
+            disabled={!newMessage.trim()}
+          >
+            <Send className="h-4 w-4" />
+            <span className="sr-only">Send message</span>
+          </Button>
+        </form>
       </div>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 use std::path::PathBuf;
-use tauri::{Manager};
 use tauri::path::BaseDirectory;
+use tauri::Manager;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -40,15 +40,22 @@ fn get_image_path(state: tauri::State<'_, ImageData>) -> String {
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-            let resource_path = app.path().resolve("razvo-resources/garbled rock.png", BaseDirectory::Resource).unwrap();
+            let resource_path = app
+                .path()
+                .resolve("razvo-resources/garbled rock.png", BaseDirectory::Resource)
+                .unwrap();
             app.manage(ImageData {
-                my_img_path: resource_path
+                my_img_path: resource_path,
             });
 
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet, gleichgewicht, get_image_path])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            gleichgewicht,
+            get_image_path
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
