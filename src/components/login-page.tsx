@@ -44,7 +44,7 @@ export function EmailLoginPage() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50/50">
+        <div className="flex items-center justify-center min-h-screen bg-muted/50">
             <Card className="w-100">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold text-center">
@@ -60,7 +60,7 @@ export function EmailLoginPage() {
 
                         {/* Show an error box if Firebase gets mad (e.g., wrong password, email exists) */}
                         {errorMessage && (
-                            <div className="p-3 text-sm text-red-500 bg-red-100 rounded-md">
+                            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
                                 {errorMessage}
                             </div>
                         )}

@@ -1,6 +1,5 @@
 use std::path::PathBuf;
-use tauri::{Builder, Manager};
-use tauri::image::Image;
+use tauri::{Manager};
 use tauri::path::BaseDirectory;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/

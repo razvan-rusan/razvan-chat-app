@@ -10,7 +10,7 @@ import {
     Routes,
 } from "react-router-dom";
 import {onAuthStateChanged, User} from "@firebase/auth";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {auth} from "@/lib/firebase.ts";
 
 export type ChatEntity = {
@@ -39,7 +39,7 @@ function ChatLayout({user}: { user: User }) {
                 {activeChat ? (
                     <ChatArea currentUser={user} chat={activeChat} />
                 ) : (
-                    <div className="flex-1 flex items-center justify-center text-gray-500">
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
                         Select a chat to start messaging
                     </div>
                 )}
@@ -74,7 +74,7 @@ export default function App() {
                 />
                 <Route path="/chat" element={
                     <ProtectedRoute user={user}>
-                        <ChatLayout user={user}/>
+                        <ChatLayout user={user!}/>
                     </ProtectedRoute>
                 }/>
                 <Route path="*" element={<Navigate to="/login" replace/>}/>
