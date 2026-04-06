@@ -1,5 +1,5 @@
 import "./App.css";
-import { EmailLoginPage } from "@/pages/login-page.tsx";
+import { LoginPage } from "@/pages/login-page.tsx";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -32,12 +32,12 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubsrcibe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
 
-    return () => unsubsrcibe();
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
@@ -53,7 +53,7 @@ export default function App() {
       <Routes>
         <Route
           path="/login"
-          element={user ? <Navigate to="/chat" replace /> : <EmailLoginPage />}
+          element={user ? <Navigate to="/chat" replace /> : <LoginPage />}
         />
         <Route
           path="/chat"

@@ -148,31 +148,33 @@ export function AppSidebar(
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t">
-        <div className="mb-2 text-sm text-muted-foreground px-2">
-          Logged in as:{" "}
-          <span className="text-foreground">{user.displayName}</span>
-        </div>
-        <div className="flex flex-row items-center justify-between w-full">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Log Out
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted"
-            onClick={() => navigate("/settings")}
-          >
-            <Settings className="h-5 w-5" />
-            <span className="sr-only">Settings</span>
-          </Button>
-        </div>
-      </SidebarFooter>
+        <SidebarFooter className="p-4 border-t">
+            <div className="mb-2 text-sm text-muted-foreground px-2">
+                Logged in as: <span className="text-foreground">{user.displayName}</span>
+            </div>
+
+            {/* The Bulletproof Flex Row */}
+            <div className="flex items-center w-full gap-2">
+                <Button
+                    variant="ghost"
+                    className="flex-1 justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={handleLogout}
+                >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log Out
+                </Button>
+
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted"
+                    onClick={() => navigate("/settings")}
+                >
+                    <Settings className="h-5 w-5" />
+                    <span className="sr-only">Settings</span>
+                </Button>
+            </div>
+        </SidebarFooter>
     </Sidebar>
   );
 }

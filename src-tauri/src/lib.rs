@@ -1,61 +1,48 @@
-use std::path::PathBuf;
-use tauri::path::BaseDirectory;
 use tauri::Manager;
-
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-#[tauri::command]
-fn gleichgewicht() {
-    println!("Ola, Bazbo!");
-}
-
-struct ImageData {
-    my_img_path: PathBuf,
-}
-
-#[tauri::command]
-fn get_image_path(state: tauri::State<'_, ImageData>) -> String {
-    state.my_img_path.to_string_lossy().to_string().into()
-}
-
-// #[tauri::command]
-// fn get_gpu_image(state: tauri::State<'_, ImageData>) -> Result<Image<'static>, String> {
-//     let img_reader = image::ImageReader::open(&state.my_img_path)
-//         .map_err(|e| e.to_string())?;
-//
-//     let decoded = img_reader.decode()
-//         .map_err(|e| e.to_string())?;
-//
-//     let rgba = decoded.to_rgba8();
-//     let (width, height) = rgba.dimensions();
-//
-//     Ok(Image::new_owned(rgba.into_raw(), width, height))
-// }
+use tauri::menu::{MenuItem, Menu};
+use tauri::tray::TrayIconBuilder;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_notification::init())
         .setup(|app| {
-            let resource_path = app
-                .path()
-                .resolve("razvo-resources/garbled rock.png", BaseDirectory::Resource)
-                .unwrap();
-            app.manage(ImageData {
-                my_img_path: resource_path,
-            });
+            let show_i = MenuItem::with_id(app, "show", "Show App", true, None::<&str>)?;
+            let hide_i = MenuItem::with_id(app, "hide", "Hide App", true, None::<&str>)?;
+            let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
+
+            let menu = Menu::with_items(app, &[&show_i, &hide_i, &quit_i])?;
+
+            let _tray = TrayIconBuilder::new()
+                .icon(app.default_window_icon().unwrap().clone())
+                .menu(&menu)
+                .tooltip("Domain Expansion")
+                .on_menu_event(|app, event| match event.id.as_ref() {
+                    "quit" => std::process::exit(0),
+                    "hide" => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            window.hide().unwrap();
+                        }
+                    },
+                    "show" => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            window.show().unwrap();
+                            window.set_focus().unwrap();
+                        }
+                    },
+                    _ => {}
+                })
+                .build(app)?;
 
             Ok(())
         })
-        .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![
-            greet,
-            gleichgewicht,
-            get_image_path
-        ])
+        .on_window_event(|window, event| match event {
+            tauri::WindowEvent::CloseRequested { api, ..} => {
+                api.prevent_close();
+                window.hide().unwrap();
+            },
+            _ => {}
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

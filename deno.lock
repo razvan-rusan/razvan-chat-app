@@ -8,6 +8,7 @@
     "npm:@tailwindcss/vite@^4.2.2": "4.2.2_vite@7.3.1",
     "npm:@tauri-apps/api@2": "2.10.1",
     "npm:@tauri-apps/cli@2": "2.10.1",
+    "npm:@tauri-apps/plugin-notification@~2.3.3": "2.3.3",
     "npm:@tauri-apps/plugin-opener@2": "2.5.3",
     "npm:@types/react-dom@^19.1.6": "19.2.3_@types+react@19.2.14",
     "npm:@types/react@^19.1.8": "19.2.14",
@@ -2327,6 +2328,12 @@
       ],
       "bin": true
     },
+    "@tauri-apps/plugin-notification@2.3.3": {
+      "integrity": "sha512-Zw+ZH18RJb41G4NrfHgIuofJiymusqN+q8fGUIIV7vyCH+5sSn5coqRv/MWB9qETsUs97vmU045q7OyseCV3Qg==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
     "@tauri-apps/plugin-opener@2.5.3": {
       "integrity": "sha512-CCcUltXMOfUEArbf3db3kCE7Ggy1ExBEBl51Ko2ODJ6GDYHRp1nSNlQm5uNCFY5k7/ufaK5Ib3Du/Zir19IYQQ==",
       "dependencies": [
@@ -4373,6 +4380,7 @@
         "npm:@tailwindcss/vite@^4.2.2",
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@2",
+        "npm:@tauri-apps/plugin-notification@~2.3.3",
         "npm:@tauri-apps/plugin-opener@2",
         "npm:@types/react-dom@^19.1.6",
         "npm:@types/react@^19.1.8",

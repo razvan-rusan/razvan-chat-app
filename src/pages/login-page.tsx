@@ -6,8 +6,9 @@ import {useNavigate} from "react-router-dom";
 import {doc, setDoc } from "firebase/firestore"
 import {auth, db} from "@/lib/firebase.ts";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "@firebase/auth";
+import {WaveBackground} from "@/pages/wave-background.tsx";
 
-export function EmailLoginPage() {
+export function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -44,66 +45,68 @@ export function EmailLoginPage() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-muted/50">
-            <Card className="w-100">
-                <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-center">
-                        {isLogin ? "Welcome Back" : "Create an Account"}
-                    </CardTitle>
-                    <CardDescription className="text-center">
-                        {isLogin ? "Enter your credentials to access your chats." : "Sign up to start chatting."}
-                    </CardDescription>
-                </CardHeader>
+        <><WaveBackground/>
+            <div className="flex items-center justify-center min-h-screen bg-muted/50">
+                <Card className="w-100 relative z-10 shadow-2xl bg-card/90 backdrop-blur-xl border-border/50">
+                    <CardHeader>
+                        <CardTitle className="text-2xl font-bold text-center text-card-foreground">
+                            {isLogin ? "Welcome Back" : "Create an Account"}
+                        </CardTitle>
+                        <CardDescription className="text-center">
+                            {isLogin ? "Enter your credentials to access your chats." : "Sign up to start chatting."}
+                        </CardDescription>
+                    </CardHeader>
 
-                <form onSubmit={handleSubmit}>
-                    <CardContent className="space-y-4">
+                    <form onSubmit={handleSubmit}>
+                        <CardContent className="space-y-4">
 
-                        {/* Show an error box if Firebase gets mad (e.g., wrong password, email exists) */}
-                        {errorMessage && (
-                            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
-                                {errorMessage}
+                            {/* Show an error box if Firebase gets mad (e.g., wrong password, email exists) */}
+                            {errorMessage && (
+                                <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
+                                    {errorMessage}
+                                </div>
+                            )}
+
+                            <div className="space-y-2">
+                                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="razvan@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
                             </div>
-                        )}
+                            <div className="space-y-2">
+                                <label htmlFor="password" className="text-sm font-medium">Password</label>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                        </CardContent>
 
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium">Email</label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="razvan@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="password" className="text-sm font-medium">Password</label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </CardContent>
+                        <CardFooter className="flex flex-col gap-3">
+                            <Button type="submit" className="w-full">
+                                {isLogin ? "Log In" : "Sign Up"}
+                            </Button>
 
-                    <CardFooter className="flex flex-col gap-3">
-                        <Button type="submit" className="w-full">
-                            {isLogin ? "Log In" : "Sign Up"}
-                        </Button>
-
-                        {/* The toggle button */}
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            className="w-full text-sm"
-                            onClick={() => setIsLogin(!isLogin)}
-                        >
-                            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
-                        </Button>
-                    </CardFooter>
-                </form>
-            </Card>
-        </div>
+                            {/* The toggle button */}
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                className="w-full text-sm"
+                                onClick={() => setIsLogin(!isLogin)}
+                            >
+                                {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
+                            </Button>
+                        </CardFooter>
+                    </form>
+                </Card>
+            </div>
+        </>
     )
 }

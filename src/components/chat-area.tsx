@@ -20,6 +20,9 @@ import { ScrollArea } from "./ui/scroll-area.tsx";
 import { SidebarTrigger } from "./ui/sidebar.tsx";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar.tsx";
 
+import { isPermissionGranted, requestPermission, sendNotification } from "@tauri-apps/plugin-notification";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+
 interface MessageEntity {
   id: string;
   text: string;
@@ -36,8 +39,9 @@ interface ChatAreaProps {
 export function ChatArea({ currentUser, chat }: ChatAreaProps) {
   const [messages, setMessages] = useState<MessageEntity[]>([]);
   const [newMessage, setNewMessage] = useState("");
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const isInitialLoad = useRef(true);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -55,13 +59,44 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
       orderBy("createdAt", "asc"),
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const changes = snapshot.docChanges();
+
       const fetchedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as MessageEntity[];
 
       setMessages(fetchedMessages);
+
+      if (!isInitialLoad.current) {
+        for (const change of changes) {
+          if (change.type === "added") {
+            const newMsg = change.doc.data() as MessageEntity;
+
+            if (newMsg.senderId !== currentUser.uid) {
+              const isWindowFocused = await getCurrentWindow().isFocused();
+
+              if (!isWindowFocused) {
+                let permissionGranted = await isPermissionGranted();
+                if (!permissionGranted) {
+                  const permission = await requestPermission();
+                  permissionGranted = permission === "granted";
+                }
+
+                if (permissionGranted) {
+                  sendNotification({
+                    title: `New message in ${chat.name || "Chat"}`,
+                    body: `${newMsg.senderName}: ${newMsg.text}`
+                  });
+                }
+              }
+            }
+          }
+        }
+      } else {
+        isInitialLoad.current = false;
+      }
     }, (error) => {
       console.error("Error fetching messages:", error);
     });
