@@ -1,4 +1,4 @@
-import "./App.css";
+import "./globals.css";
 import { LoginPage } from "@/pages/login-page.tsx";
 import {
   BrowserRouter as Router,

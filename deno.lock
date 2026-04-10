@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "npm:@firebase/auth@^1.12.2": "1.12.2_@firebase+app@0.14.10",
+    "npm:@firebase/auth@^1.13.0": "1.13.0_@firebase+app@0.14.10",
     "npm:@firebase/firestore@^4.13.0": "4.13.0_@firebase+app@0.14.10",
     "npm:@fontsource-variable/geist@^5.2.8": "5.2.8",
     "npm:@fontsource-variable/space-grotesk@^5.2.10": "5.2.10",
@@ -504,7 +504,7 @@
       "integrity": "sha512-2pj8m/hnqXvMLfC0Mk+fORVTM5DQPkS6l8JpMgtoAWGVgCmYnoWdFMaNWtKbmCxBEyvMA3FlnCJyzrUSMWTfuA==",
       "dependencies": [
         "@firebase/app-compat",
-        "@firebase/auth",
+        "@firebase/auth@1.12.2_@firebase+app@0.14.10",
         "@firebase/auth-types",
         "@firebase/component",
         "@firebase/util",
@@ -523,6 +523,16 @@
     },
     "@firebase/auth@1.12.2_@firebase+app@0.14.10": {
       "integrity": "sha512-CZJL8V10Vzibs+pDTXdQF+hot1IigIoqF4a4lA/qr5Deo1srcefiyIfgg28B67Lk7IxZhwfJMuI+1bu2xBmV0A==",
+      "dependencies": [
+        "@firebase/app",
+        "@firebase/component",
+        "@firebase/logger",
+        "@firebase/util",
+        "tslib"
+      ]
+    },
+    "@firebase/auth@1.13.0_@firebase+app@0.14.10": {
+      "integrity": "sha512-mKkSLNym3UbnnZ06dAmtqzp5EpPGCANGCZDJbkoR135aoUdKG6Aizwcnp29RzsQpwH0nmy5nay17Sfbsh9oY8A==",
       "dependencies": [
         "@firebase/app",
         "@firebase/component",
@@ -2965,7 +2975,7 @@
         "@firebase/app-check-compat",
         "@firebase/app-compat",
         "@firebase/app-types",
-        "@firebase/auth",
+        "@firebase/auth@1.12.2_@firebase+app@0.14.10",
         "@firebase/auth-compat",
         "@firebase/data-connect",
         "@firebase/database",
@@ -4373,7 +4383,7 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@firebase/auth@^1.12.2",
+        "npm:@firebase/auth@^1.13.0",
         "npm:@firebase/firestore@^4.13.0",
         "npm:@fontsource-variable/geist@^5.2.8",
         "npm:@fontsource-variable/space-grotesk@^5.2.10",

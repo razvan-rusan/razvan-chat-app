@@ -5,7 +5,12 @@ import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 import {doc, setDoc } from "firebase/firestore"
 import {auth, db} from "@/lib/firebase.ts";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "@firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+    UserCredential
+} from "@firebase/auth";
 import {WaveBackground} from "@/pages/wave-background.tsx";
 
 export function LoginPage() {
@@ -24,7 +29,7 @@ export function LoginPage() {
             if (isLogin) {
                 await signInWithEmailAndPassword(auth, email, password);
             } else {
-                const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                const userCred: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
 
                 const generatedName = email.split('@')[0];
 

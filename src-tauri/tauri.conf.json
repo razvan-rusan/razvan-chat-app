@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "domain-expansion",
+        "title": "Chat App",
         "width": 800,
         "height": 600
       }

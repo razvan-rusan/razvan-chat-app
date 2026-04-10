@@ -10,7 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@firebase/auth": "^1.12.2",
+    "@firebase/auth": "^1.13.0",
     "@firebase/firestore": "^4.13.0",
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.2.10",
