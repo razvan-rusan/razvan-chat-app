@@ -29,6 +29,7 @@ src-tauri/target
 
 #misc
 public/*
+bfg-1.15.0.jar
 
 #environment variables (e.g. API keys)
 .env
