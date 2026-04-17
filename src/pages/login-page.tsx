@@ -50,7 +50,8 @@ export function LoginPage() {
     }
 
     return (
-        <><WaveBackground/>
+        <>
+            <WaveBackground/>
             <div className="flex items-center justify-center min-h-screen bg-muted/50">
                 <Card className="w-100 relative z-10 shadow-2xl bg-card/90 backdrop-blur-xl border-border/50">
                     <CardHeader>
