@@ -1,4 +1,14 @@
 {
   "nodeModulesDir": "auto",
-  "allowScripts": ["npm:@firebase/util@1.15.0", "npm:esbuild@0.27.4", "npm:msw@2.12.14", "npm:protobufjs@7.5.4"]
+  "allowScripts": [
+    "npm:@firebase/util@1.15.0",
+    "npm:esbuild@0.27.4",
+    "npm:msw@2.12.14",
+    "npm:protobufjs@7.5.4"
+  ],
+  "tasks": {
+    "vite": "deno run -A --env npm:vite",
+    "tauri": "deno run -A --env npm:@tauri-apps/cli",
+    "dev": "deno task tauri dev"
+  }
 }
