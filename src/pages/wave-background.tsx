@@ -14,7 +14,9 @@ export function WaveBackground() {
             const style = getComputedStyle(document.documentElement);
             // '---muted-foreground' returns a HSL string like "215 20.2% 65.1%"
             const hsl = style.getPropertyValue('--primary').trim();
-            return hsl ? `hsl(${hsl})` : 'rgba(200, 210, 255, 0.5)';
+            let computedColor = hsl ? `hsl(${hsl})` : 'rgba(200, 210, 255, 0.5)';
+            if (document.documentElement.classList.contains("dark")) computedColor = 'rgba(226, 226, 226, 0.5)';
+            return computedColor;
         };
 
         let animationFrameId: number;
