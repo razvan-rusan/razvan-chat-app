@@ -8,22 +8,22 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .setup(|app| {
             let show_i = MenuItem::with_id(app, "show", "Show App", true, None::<&str>)?;
-            let hide_i = MenuItem::with_id(app, "hide", "Hide App", true, None::<&str>)?;
+            //let hide_i = MenuItem::with_id(app, "hide", "Hide App", true, None::<&str>)?;
             let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
 
-            let menu = Menu::with_items(app, &[&show_i, &hide_i, &quit_i])?;
+            let menu = Menu::with_items(app, &[&show_i, /*&hide_i,*/ &quit_i])?;
 
             let _tray = TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
                 .menu(&menu)
-                .tooltip("Domain Expansion")
+                .tooltip("Planet Express")
                 .on_menu_event(|app, event| match event.id.as_ref() {
                     "quit" => std::process::exit(0),
-                    "hide" => {
-                        if let Some(window) = app.get_webview_window("main") {
-                            window.hide().unwrap();
-                        }
-                    },
+                    // "hide" => {
+                    //     if let Some(window) = app.get_webview_window("main") {
+                    //         window.hide().unwrap();
+                    //     }
+                    // },
                     "show" => {
                         if let Some(window) = app.get_webview_window("main") {
                             window.show().unwrap();

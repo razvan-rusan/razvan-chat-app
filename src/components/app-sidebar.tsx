@@ -40,7 +40,7 @@ export function AppSidebar(
 ) {
   const [chats, setChats] = useState<ChatEntity[]>([]);
   const navigate = useNavigate();
-
+  
 useEffect(() => {
     if (!user) return;
 
