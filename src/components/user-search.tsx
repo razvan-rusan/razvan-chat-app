@@ -17,7 +17,6 @@ import {
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase.ts";
 
-// 1. Explicitly define what a SearchedUser is, matching Firestore's schema
 export interface SearchedUser {
   id: string;
   email: string;
@@ -92,7 +91,6 @@ export function UserSearch(
           className="w-full justify-start text-muted-foreground font-normal h-9"
         >
           <Search className="mr-2 h-4 w-4 shrink-0" />
-          {/* 2. Actually utilizing the placeholder prop here */}
           {searchQuery || placeholder}
         </Button>
       </PopoverTrigger>
@@ -122,7 +120,6 @@ export function UserSearch(
                 >
                   <UserIcon className="mr-2 h-4 w-4" />
                   <div className="flex flex-col">
-                    {/* 3. Using displayName to render */}
                     <span>{suggestion.displayName}</span>
                     <span className="text-xs text-muted-foreground">
                       {suggestion.email}

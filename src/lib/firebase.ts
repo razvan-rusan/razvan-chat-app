@@ -24,4 +24,4 @@ export const db = initializeFirestore(app, {
         tabManager: persistentMultipleTabManager()
     })
 });
-export const googleAuthProvider = new GoogleAuthProvider();
+export const googleAuthProvider = new GoogleAuthProvider();//export const db = getFirestore(app);

@@ -132,7 +132,6 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
 
   return (
     <div className="flex flex-col h-full w-full">
-      {/* HEADER */}
       <header className="flex items-center h-16 px-4 border-b shrink-0 bg-background">
         <SidebarTrigger className="mr-4" />
         <h2 className="text-lg font-semibold tracking-tight">
@@ -140,7 +139,6 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
         </h2>
       </header>
 
-      {/* MESSAGE FEED */}
       <ScrollArea className="flex-1 min-h-0 p-4 bg-muted/30">
         <div className="flex flex-col gap-4">
           {messages.length === 0
@@ -199,7 +197,6 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
         </div>
       </ScrollArea>
 
-      {/* COMPOSER */}
       <div className="p-4 border-t mt-auto shrink-0 bg-background">
         <form onSubmit={handleSend} className="flex items-center gap-2">
           <Input

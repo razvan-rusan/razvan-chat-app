@@ -90,7 +90,7 @@ useEffect(() => {
       console.log("🧹 [Sidebar] Cleaning up Snapshot Listener.");
       unsubscribe();
     };
-  }, [user]); // <-- double check this dependency array!
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -102,33 +102,26 @@ useEffect(() => {
 
   const handleStartDM = async (targetUser: SearchedUser) => {
     try {
-      // 1. Create the participants array and the corresponding names array.
-      // We must decide on a consistent order. Sorting by UID is the industry standard
-      // because UIDs are globally unique.
       const participants = [user.uid, targetUser.id];
       const names = [
         user.displayName || user.email?.split('@')[0] || "Me",
         targetUser.displayName
       ];
 
-      // 2. Create an array of objects so we can sort them together
       const combined = participants.map((uid, index) => ({
         uid,
         name: names[index]
       }));
 
-      // 3. Sort by UID string. This ensures the order is ALWAYS the same!
       combined.sort((a, b) => a.uid.localeCompare(b.uid));
 
-      // 4. Extract the sorted arrays
       const sortedParticipants = combined.map(item => item.uid);
       const sortedNames = combined.map(item => item.name);
 
-      // 5. Write to DB
       const newChatRef = await addDoc(collection(db, "chats"), {
         type: "dm",
         participants: sortedParticipants,
-        participantNames: sortedNames, // Now perfectly aligned!
+        participantNames: sortedNames, 
         updatedAt: serverTimestamp(),
         lastMessage: "Chat started",
       });

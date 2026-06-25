@@ -9,10 +9,8 @@ export function WaveBackground() {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Snatch the 'primary' or 'muted-foreground' color from shadcn's CSS variables
         const getThemeColor = () => {
             const style = getComputedStyle(document.documentElement);
-            // '---muted-foreground' returns a HSL string like "215 20.2% 65.1%"
             const hsl = style.getPropertyValue('--primary').trim();
             let computedColor = hsl ? `hsl(${hsl})` : 'rgba(200, 210, 255, 0.5)';
             if (document.documentElement.classList.contains("dark")) computedColor = 'rgba(226, 226, 226, 0.5)';
@@ -38,7 +36,7 @@ export function WaveBackground() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const numWaves = 12;
-            const speed = 0.15; // Slow and steady
+            const speed = 0.15; 
             offset += speed * deltaTime;
 
             const baseColor = getThemeColor();
@@ -46,7 +44,6 @@ export function WaveBackground() {
             for (let i = 0; i < numWaves; i++) {
                 ctx.beginPath();
 
-                // Use the semantic theme color with dynamic opacity
                 ctx.globalAlpha = 0.15 + (i / numWaves) * 0.35;
                 ctx.strokeStyle = baseColor;
                 ctx.lineWidth = 1.2;

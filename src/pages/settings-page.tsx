@@ -35,7 +35,6 @@ export function SettingsPage({ user }: SettingsPageProps) {
   return (
     <div className="flex-1 h-screen overflow-y-auto bg-muted/30 p-6 md:p-10">
       <div className="max-w-2xl mx-auto space-y-6">
-        {/* Back Button */}
         <Button
           variant="ghost"
           className="mb-4 pl-0 hover:bg-transparent hover:text-primary"
@@ -52,7 +51,6 @@ export function SettingsPage({ user }: SettingsPageProps) {
           </p>
         </div>
 
-        {/* Card cu Appearance*/}
         <Card>
           <CardHeader>
             <CardTitle>Appearance</CardTitle>
@@ -69,7 +67,6 @@ export function SettingsPage({ user }: SettingsPageProps) {
                 </p>
               </div>
 
-              {/* Butoane de Toggle pt Tema */}
               <div className="flex items-center gap-2 border rounded-full p-1 bg-muted/50">
                 <Button
                   variant={!isDarkMode ? "secondary" : "ghost"}
@@ -94,7 +91,6 @@ export function SettingsPage({ user }: SettingsPageProps) {
           </CardContent>
         </Card>
 
-        {/* Placeholder pentru optiunile de personalizare */}
         <Card className="opacity-50 pointer-events-none">
           <CardHeader>
             <CardTitle>Profile Customization</CardTitle>

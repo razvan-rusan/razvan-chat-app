@@ -46,7 +46,6 @@ export function CreateGroupModal(
 
     setIsSubmitting(true);
     try {
-      // Construct the group document exactly as your DB expects
       await addDoc(collection(db, "chats"), {
         type: "group",
         name: groupName.trim() || "New Group",
@@ -55,7 +54,6 @@ export function CreateGroupModal(
         updatedAt: serverTimestamp(),
       });
 
-      // Reset state and close
       setGroupName("");
       setSelectedUsers([]);
       onClose();
@@ -67,7 +65,6 @@ export function CreateGroupModal(
     }
   };
 
-  // Exclude the current user AND anyone already selected from search results
   const usersToExclude = [currentUser.uid, ...selectedUsers.map((u) => u.id)];
 
   return (
@@ -78,7 +75,6 @@ export function CreateGroupModal(
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
-          {/* Group Name Input */}
           <Input
             placeholder="Group Name (Optional)"
             value={groupName}
@@ -86,14 +82,12 @@ export function CreateGroupModal(
             className="rounded-xl"
           />
 
-          {/* Reusable Search Component */}
           <UserSearch
             onSelectUser={handleAddUser}
             excludeIds={usersToExclude}
             placeholder="Search to add friends..."
           />
 
-          {/* Selected Participants List */}
           <div className="space-y-4 mt-2">
             <h4 className="text-sm font-semibold text-muted-foreground">
               Participants ({selectedUsers.length})
