@@ -77,7 +77,6 @@ export function WaveBackground() {
     return (
         <canvas
             ref={canvasRef}
-            // bg-background ensures it matches your shadcn theme perfectly
             className="absolute inset-0 z-0 pointer-events-none bg-background"
         />
     );

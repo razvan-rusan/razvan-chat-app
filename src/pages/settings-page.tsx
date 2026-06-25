@@ -15,7 +15,7 @@ interface SettingsPageProps {
   user: User;
 }
 
-// @ts-ignore Will use the `user` prop when adding profile customization
+// @ts-ignore Poate folosesc acest prop `user` cand adaug sa iti customizezi profilul
 export function SettingsPage({ user }: SettingsPageProps) {
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ export function SettingsPage({ user }: SettingsPageProps) {
           </p>
         </div>
 
-        {/* Appearance Card */}
+        {/* Card cu Appearance*/}
         <Card>
           <CardHeader>
             <CardTitle>Appearance</CardTitle>
@@ -69,7 +69,7 @@ export function SettingsPage({ user }: SettingsPageProps) {
                 </p>
               </div>
 
-              {/* Theme Toggle Buttons */}
+              {/* Butoane de Toggle pt Tema */}
               <div className="flex items-center gap-2 border rounded-full p-1 bg-muted/50">
                 <Button
                   variant={!isDarkMode ? "secondary" : "ghost"}
@@ -94,7 +94,7 @@ export function SettingsPage({ user }: SettingsPageProps) {
           </CardContent>
         </Card>
 
-        {/* Placeholder for Profile / Avatar Card for later */}
+        {/* Placeholder pentru optiunile de personalizare */}
         <Card className="opacity-50 pointer-events-none">
           <CardHeader>
             <CardTitle>Profile Customization</CardTitle>

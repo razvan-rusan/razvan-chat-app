@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { LogOut, Plus, Settings, User as UserIcon, Users } from "lucide-react";
 import {
+  doc,
+  getDoc,
   addDoc,
   collection,
   onSnapshot,
   query,
   serverTimestamp,
   where,
+  updateDoc,
 } from "firebase/firestore";
 import { signOut, User } from "firebase/auth";
 import { auth, db } from "../lib/firebase.ts";
@@ -49,15 +52,54 @@ export function AppSidebar(
       where("participants", "array-contains", user.uid),
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedChats = snapshot.docs.map((doc) => ({
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const rawChats = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as ChatEntity[];
 
-      setChats(fetchedChats);
-    }, (error) => {
-      console.error("🚨 Firestore Listener Error:", error.message);
+      const resolvedChats = await Promise.all(
+        rawChats.map(async (chat) => {
+          if (chat.type === "dm") {
+            // 1. FAST PATH: The array exists
+            if (chat.participantNames && chat.participantNames.length === 2) {
+              // Find the index of the current user in the participants array
+              const myIndex = chat.participants.indexOf(user.uid);
+              // The "other" person is at the other index
+              const otherIndex = myIndex === 0 ? 1 : 0;
+              return { ...chat, name: chat.participantNames[otherIndex] };
+            } 
+            // 2. SLOW PATH: Needs fetch + migration
+            else {
+              try {
+                const otherUserId = chat.participants.find((id) => id !== user.uid);
+                const userSnap = await getDoc(doc(db, "users", otherUserId!));
+                
+                if (userSnap.exists()) {
+                  const otherName = userSnap.data().displayName;
+                  const myName = user.displayName || "Me";
+                  
+                  // Maintain order: Index 0 name matches Index 0 UID, Index 1 matches Index 1
+                  const myIndex = chat.participants.indexOf(user.uid);
+                  const namesArray = myIndex === 0 
+                    ? [myName, otherName] 
+                    : [otherName, myName];
+
+                  await updateDoc(doc(db, "chats", chat.id), {
+                    participantNames: namesArray
+                  });
+
+                  return { ...chat, name: otherName };
+                }
+              } catch (error) {
+                console.error("Migration failed:", error);
+              }
+            }
+          }
+          return chat;
+        })
+      );
+      setChats(resolvedChats);
     });
 
     return () => unsubscribe();
@@ -73,10 +115,33 @@ export function AppSidebar(
 
   const handleStartDM = async (targetUser: SearchedUser) => {
     try {
+      // 1. Create the participants array and the corresponding names array.
+      // We must decide on a consistent order. Sorting by UID is the industry standard
+      // because UIDs are globally unique.
+      const participants = [user.uid, targetUser.id];
+      const names = [
+        user.displayName || user.email?.split('@')[0] || "Me",
+        targetUser.displayName
+      ];
+
+      // 2. Create an array of objects so we can sort them together
+      const combined = participants.map((uid, index) => ({
+        uid,
+        name: names[index]
+      }));
+
+      // 3. Sort by UID string. This ensures the order is ALWAYS the same!
+      combined.sort((a, b) => a.uid.localeCompare(b.uid));
+
+      // 4. Extract the sorted arrays
+      const sortedParticipants = combined.map(item => item.uid);
+      const sortedNames = combined.map(item => item.name);
+
+      // 5. Write to DB
       const newChatRef = await addDoc(collection(db, "chats"), {
         type: "dm",
-        participants: [user.uid, targetUser.id],
-        name: targetUser.displayName,
+        participants: sortedParticipants,
+        participantNames: sortedNames, // Now perfectly aligned!
         updatedAt: serverTimestamp(),
         lastMessage: "Chat started",
       });
@@ -84,7 +149,7 @@ export function AppSidebar(
       onSelectChat({
         id: newChatRef.id,
         type: "dm",
-        participants: [user.uid, targetUser.id],
+        participants: sortedParticipants,
         name: targetUser.displayName,
       });
     } catch (error) {
@@ -153,7 +218,7 @@ export function AppSidebar(
                 Logged in as: <span className="text-foreground">{user.displayName}</span>
             </div>
 
-            {/* The Bulletproof Flex Row */}
+            {/* Smecherie Flex Row */}
             <div className="flex items-center w-full gap-2">
                 <Button
                     variant="ghost"

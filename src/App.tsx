@@ -16,6 +16,7 @@ export type ChatEntity = {
   name?: string;
   type: "dm" | "group";
   participants: string[];
+  participantNames?: string[];
 };
 
 function ProtectedRoute(

@@ -1,6 +1,5 @@
 import firebase from "firebase/compat/app";
 import initializeApp = firebase.initializeApp;
-//import {getAuth, GoogleAuthProvider} from "@firebase/auth";
 import { initializeAuth, indexedDBLocalPersistence, GoogleAuthProvider} from "firebase/auth";
 import {getFirestore} from "@firebase/firestore";
 

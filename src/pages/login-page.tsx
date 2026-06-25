@@ -66,7 +66,7 @@ export function LoginPage() {
                     <form onSubmit={handleSubmit}>
                         <CardContent className="space-y-4">
 
-                            {/* Show an error box if Firebase gets mad (e.g., wrong password, email exists) */}
+                            {/* Arata o eroare daca Firebase face fite (gen parola gresita, email deja folosit) */}
                             {errorMessage && (
                                 <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
                                     {errorMessage}
@@ -100,7 +100,7 @@ export function LoginPage() {
                                 {isLogin ? "Log In" : "Sign Up"}
                             </Button>
 
-                            {/* The toggle button */}
+                            {/* Button-ul de toggle */}
                             <Button
                                 type="button"
                                 variant="ghost"
