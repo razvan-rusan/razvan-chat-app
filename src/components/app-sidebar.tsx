@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { LogOut, Plus, Settings, User as UserIcon, Users } from "lucide-react";
 import {
-  doc,
-  getDoc,
   addDoc,
   collection,
   onSnapshot,
   query,
   serverTimestamp,
   where,
-  updateDoc,
 } from "firebase/firestore";
 import { signOut, User } from "firebase/auth";
 import { auth, db } from "../lib/firebase.ts";
