@@ -52,7 +52,6 @@ useEffect(() => {
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      // 1. Time the data processing
       const startTime = performance.now();
       
       console.log(`⏱️ [Snapshot Fire] Received ${snapshot.docs.length} chat documents from Firestore.`);
@@ -76,7 +75,6 @@ useEffect(() => {
       const endTime = performance.now();
       console.log(`🚀 [Sync Processing] Array mapping took ${(endTime - startTime).toFixed(4)}ms`);
 
-      // 2. Track when state updates are pushed
       console.log("💾 [State Update] Calling setChats()...");
       setChats(fetchedChats);
     }, (error) => {
