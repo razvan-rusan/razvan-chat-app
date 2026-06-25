@@ -44,66 +44,53 @@ export function AppSidebar(
   const [chats, setChats] = useState<ChatEntity[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+useEffect(() => {
     if (!user) return;
+
+    console.log("🛠️ [Sidebar] Initializing Firestore Snapshot Listener...");
 
     const q = query(
       collection(db, "chats"),
       where("participants", "array-contains", user.uid),
     );
 
-    const unsubscribe = onSnapshot(q, async (snapshot) => {
-      const rawChats = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as ChatEntity[];
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      // 1. Time the data processing
+      const startTime = performance.now();
+      
+      console.log(`⏱️ [Snapshot Fire] Received ${snapshot.docs.length} chat documents from Firestore.`);
 
-      const resolvedChats = await Promise.all(
-        rawChats.map(async (chat) => {
-          if (chat.type === "dm") {
-            // 1. FAST PATH: The array exists
-            if (chat.participantNames && chat.participantNames.length === 2) {
-              // Find the index of the current user in the participants array
-              const myIndex = chat.participants.indexOf(user.uid);
-              // The "other" person is at the other index
-              const otherIndex = myIndex === 0 ? 1 : 0;
-              return { ...chat, name: chat.participantNames[otherIndex] };
-            } 
-            // 2. SLOW PATH: Needs fetch + migration
-            else {
-              try {
-                const otherUserId = chat.participants.find((id) => id !== user.uid);
-                const userSnap = await getDoc(doc(db, "users", otherUserId!));
-                
-                if (userSnap.exists()) {
-                  const otherName = userSnap.data().displayName;
-                  const myName = user.displayName || "Me";
-                  
-                  // Maintain order: Index 0 name matches Index 0 UID, Index 1 matches Index 1
-                  const myIndex = chat.participants.indexOf(user.uid);
-                  const namesArray = myIndex === 0 
-                    ? [myName, otherName] 
-                    : [otherName, myName];
+      const fetchedChats = snapshot.docs.map((doc) => {
+        const data = doc.data() as ChatEntity;
+        
+        if (data.type === "dm" && data.participantNames) {
+          const myIndex = data.participants.indexOf(user.uid);
+          const otherIndex = myIndex === 0 ? 1 : 0;
+          return { 
+            ...data, 
+            id: doc.id,
+            name: data.participantNames[otherIndex] 
+          };
+        }
+        
+        return { ...data, id: doc.id };
+      });
 
-                  await updateDoc(doc(db, "chats", chat.id), {
-                    participantNames: namesArray
-                  });
+      const endTime = performance.now();
+      console.log(`🚀 [Sync Processing] Array mapping took ${(endTime - startTime).toFixed(4)}ms`);
 
-                  return { ...chat, name: otherName };
-                }
-              } catch (error) {
-                console.error("Migration failed:", error);
-              }
-            }
-          }
-          return chat;
-        })
-      );
-      setChats(resolvedChats);
+      // 2. Track when state updates are pushed
+      console.log("💾 [State Update] Calling setChats()...");
+      setChats(fetchedChats);
+    }, (error) => {
+      console.error("🚨 Firestore Listener Error:", error.message);
     });
 
-    return () => unsubscribe();
-  }, [user]);
+    return () => {
+      console.log("🧹 [Sidebar] Cleaning up Snapshot Listener.");
+      unsubscribe();
+    };
+  }, [user]); // <-- double check this dependency array!
 
   const handleLogout = async () => {
     try {
@@ -157,6 +144,8 @@ export function AppSidebar(
       alert("Failed to start chat.");
     }
   };
+
+  console.log(`🎨 [Sidebar Render] Rendering sidebar component with ${chats.length} chats. Active Chat ID: ${activeChatId}`);
 
   return (
     <Sidebar>
