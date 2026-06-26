@@ -52,7 +52,7 @@ export function LoginPage() {
     }
 
     useEffect(() => {
-        testNotificationSystem();
+        //testNotificationSystem();
     },[]);
 
     return (
