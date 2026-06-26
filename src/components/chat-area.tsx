@@ -60,8 +60,7 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
     );
 
     const unsubscribe = onSnapshot(q, async (snapshot) => {
-      const changes = snapshot.docChanges();
-
+      // 1. Update the UI state regardless of cache/network
       const fetchedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -69,35 +68,49 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
 
       setMessages(fetchedMessages);
 
-      if (!isInitialLoad.current) {
-        for (const change of changes) {
-          if (change.type === "added") {
-            const newMsg = change.doc.data() as MessageEntity;
+      // 2. Ignore notifications if this is the initial data load
+      if (isInitialLoad.current) {
+        isInitialLoad.current = false;
+        return;
+      }
 
-            if (newMsg.senderId !== currentUser.uid) {
-              const isWindowFocused = await getCurrentWindow().isFocused();
+      // 3. Ignore notifications if they are re-hydrated from local cache
+      if (snapshot.metadata.fromCache) {
+        return;
+      }
 
-              if (!isWindowFocused) {
-                let permissionGranted = await isPermissionGranted();
-                if (!permissionGranted) {
-                  const permission = await requestPermission();
-                  permissionGranted = permission === "granted";
-                }
+      // 4. Process only new changes
+      for (const change of snapshot.docChanges()) {
+        if (change.type === "added") {
+          const newMsg = change.doc.data() as MessageEntity;
 
+          // Only notify for messages from other people
+          if (newMsg.senderId !== currentUser.uid) {
+
+            // Check focus and minimization in parallel for performance
+            const isMinimized = await getCurrentWindow().isMinimized();
+
+            // Only fire if the user is NOT looking at the window
+            if (isMinimized) {
+              let permissionGranted = await isPermissionGranted();
+
+              if (!permissionGranted) {
+                const permission = await requestPermission();
+                permissionGranted = permission === "granted";
+              }
+
+              if (permissionGranted) {
                 const isPerson = chat.type === 'dm';
-
-                if (permissionGranted) {
-                  sendNotification({
-                    title: (isPerson) ? `New message from ${chat.name || "Somebody"}` : `New message in ${chat.name || "Chat"}`,
-                    body: `${newMsg.senderName}: ${newMsg.text}`
-                  });
-                }
+                sendNotification({
+                  title: isPerson
+                      ? `New message from ${chat.name || "Somebody"}`
+                      : `New message in ${chat.name || "Chat"}`,
+                  body: `${newMsg.senderName}: ${newMsg.text}`
+                });
               }
             }
           }
         }
-      } else {
-        isInitialLoad.current = false;
       }
     }, (error) => {
       console.error("Error fetching messages:", error);
