@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    domain_expansion_lib::run()
+    show_and_tell_lib::run()
 }

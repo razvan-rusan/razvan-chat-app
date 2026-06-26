@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "domain-expansion",
+  "productName": "show-and-tell",
   "version": "0.1.4",
-  "identifier": "com.razvan.domain-expansion",
+  "identifier": "com.squirtle.show-and-tell",
   "build": {
     "beforeDevCommand": "deno task vite",
     "devUrl": "http://localhost:1420",
