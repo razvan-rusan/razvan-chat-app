@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
@@ -12,6 +12,8 @@ import {
     UserCredential
 } from "@firebase/auth";
 import {WaveBackground} from "@/pages/wave-background.tsx";
+// @ts-ignore
+import testNotificationSystem from "@/lib/testnotifs.ts";
 
 export function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -48,6 +50,10 @@ export function LoginPage() {
             setErrorMessage(error.message)
         }
     }
+
+    useEffect(() => {
+        //testNotificationSystem();
+    },[]);
 
     return (
         <>

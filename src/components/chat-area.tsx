@@ -84,9 +84,11 @@ export function ChatArea({ currentUser, chat }: ChatAreaProps) {
                   permissionGranted = permission === "granted";
                 }
 
+                const isPerson = chat.type === 'dm';
+
                 if (permissionGranted) {
                   sendNotification({
-                    title: `New message in ${chat.name || "Chat"}`,
+                    title: (isPerson) ? `New message from ${chat.name || "Somebody"}` : `New message in ${chat.name || "Chat"}`,
                     body: `${newMsg.senderName}: ${newMsg.text}`
                   });
                 }
