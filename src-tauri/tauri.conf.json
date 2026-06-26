@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "planet-express",
+  "productName": "mox-opal",
   "version": "0.1.4",
-  "identifier": "com.bazbanel.planet-express",
+  "identifier": "com.greasefang.mox-opal",
   "build": {
     "beforeDevCommand": "deno task vite",
     "devUrl": "http://localhost:1420",

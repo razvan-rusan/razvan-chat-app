@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    planet_express_lib::run()
+    mox_opal_lib::run()
 }
